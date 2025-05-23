@@ -1,0 +1,31 @@
+---
+title: "DSCI 100 Class Notes"
+author: Liam Patrick Murray
+format: html
+---
+
+## Web Scraping
+
+To scrape web info, we rely on `rvest` to access HTML information.
+
+**Example** Let's scrape Wikipedia to find the most populated cities in Canada.
+
+```{r}
+# Import libraries to access HTML and manipulate strings
+library(rvest)
+library(stringr)
+library(tidyverse)
+
+# Collect HTML from URL
+webpage <- read_html("https://en.wikipedia.org/wiki/List_of_the_largest_population_centres_in_Canada")
+
+# Isolate data using CSS selectors and the paste function to create a string seperated by commas.
+pop_selectors <- paste("td:nth-child(5)", sep = ",")
+city_selectors <- paste(".jquery-tablesorter td:nth-child(2) a",sep=",") # This is broken at the moment
+# Isolate HTML nodes, which are the paired tags with the specified selectors
+html_nodes <- html_nodes(webpage, pop_selectors)
+
+# Take only the encased text within the nodes
+node_text <- html_text(html_nodes) |> str_replace_all("\n", "") |> str_replace_all(",","")
+pop_values <- as.numeric_version(node_text)
+```

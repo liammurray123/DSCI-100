@@ -1,0 +1,16 @@
+---
+title: "Cleaning and Wrangling Data"
+author: Liam Murray
+format: html
+---
+
+## Reshaping data
+Often one "true" variable is split up to make data readable for humans, but this is a pain to deal with as a data scientist. This means we need to reshape our data to make it better representative of the tidy data principles.
+
+```{R}
+library(tidyverse)
+
+# Import CSV data
+lang_wide <- read_csv("../Canadian Languages/can_lang.csv")
+lang_wide
+```
